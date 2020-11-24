@@ -1,0 +1,11 @@
+CREATE TABLE Library(LibraryID int,Name varchar(250),StreetAddress varchar(250),City varchar(250),State varchar(50),PRIMARY KEY(LibraryID));
+
+CREATE TABLE Patron(PatronID int,FirstName varchar(50),LastName varchar(50),Birthdate Date,PhoneNumber int,Email varchar(250),LibraryID int,PRIMARY KEY(PatronID),FOREIGN KEY(LibraryID) REFERENCES library(LibraryID));
+
+CREATE TABLE Book(ISBN int,Title varchar(250),Author varchar(50),PublishedDate Date,Edition varchar(5),DeweyDecimalNumber varchar(50),AgeGroup varchar(50),PRIMARY KEY(ISBN));
+
+CREATE TABLE Holds(PatronID int,ISBN int,LibraryID int,DatePlaced timestamp,PRIMARY KEY(PatronID,ISBN),FOREIGN KEY(PatronID) REFERENCES patron(PatronID),FOREIGN KEY(ISBN) REFERENCES book(ISBN),FOREIGN KEY(LibraryID) REFERENCES library(LibraryID));
+
+CREATE TABLE Copy(ISBN int,CopyNumber int,LibraryID int,PurchaseDate Date,Condition varchar(250),Status varchar(250),PRIMARY KEY(ISBN, CopyNumber),FOREIGN KEY(ISBN) REFERENCES book(ISBN),FOREIGN KEY(LibraryID) REFERENCES library(LibraryID));
+
+CREATE TABLE CheckedOut(ISBN int,CopyNumber int,PatronID int,CheckOutDate timestamp,DueDate timestamp,TimesRenewed int,OverdueFee Money,PRIMARY KEY(ISBN, PatronID, CheckOutDate),FOREIGN KEY(ISBN) REFERENCES book(ISBN),FOREIGN KEY(PatronID) REFERENCES patron(PatronID));
