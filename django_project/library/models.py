@@ -27,15 +27,13 @@ class Book(models.Model):
 	title = models.CharField(max_length=250)
 	author = models.CharField(max_length=50)
 	publishedDate = models.DateField()
-	edition = models.IntegerField(default=0)
-	deweyDecimalNumber = models.DecimalField(max_digits=10,decimal_places=5)
-	ageGroups = models.CharField(max_length=50)
+	edition = models.IntegerField(default=1)
 	def __str__(self):
 		return self.title
 
 class Holds(models.Model):
 	patronID = models.ForeignKey(Patron, on_delete=models.CASCADE)
-	ISBN = models.ForeignKey(Book, on_delete=models.CASCADE)
+	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
 	libraryID = models.ForeignKey(Library, on_delete=models.CASCADE)
 	datePlaced = models.DateField()
 	holdID = models.AutoField(primary_key=True)
@@ -43,7 +41,7 @@ class Holds(models.Model):
 		return self.holdID
 
 class Copy(models.Model):
-	ISBN = models.ForeignKey(Book, on_delete=models.CASCADE)
+	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
 	copyNumber = models.IntegerField(default=0)
 	libraryID = models.ForeignKey(Library, on_delete=models.CASCADE)
 	purchaseDate = models.DateField()
@@ -54,7 +52,7 @@ class Copy(models.Model):
 		return self.copyID
 
 class CheckedOut(models.Model):
-	ISBN = models.ForeignKey(Book, on_delete=models.CASCADE)
+	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
 	copyNumber = models.IntegerField(default=0)
 	patronID = models.ForeignKey(Patron, on_delete=models.CASCADE)
 	checkOutDate = models.DateField()
