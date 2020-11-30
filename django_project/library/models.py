@@ -52,3 +52,14 @@ class Copy(models.Model):
 	copyID = models.AutoField(primary_key=True)
 	def __str__(self):
 		return self.copyID
+
+class CheckedOut(models.Model):
+	ISBN = models.ForeignKey(Book, on_delete=models.CASCADE)
+	copyNumber = models.IntegerField(default=0)
+	patronID = models.ForeignKey(Patron, on_delete=models.CASCADE)
+	checkOutDate = models.DateField()
+	dueDate = models.DateField()
+	timesRenewed = models.IntegerField(default=0)
+	overdueFee = models.DecimalField(max_digits=10,decimal_places=2)
+	def __str__(self):
+		return self.copyID
