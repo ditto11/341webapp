@@ -3,61 +3,61 @@ from django.db import models
 # Create your models here.
 
 class Library(models.Model):
-	libraryID = models.AutoField(primary_key=True)
+	libraryid = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=250)
 	city = models.CharField(max_length=250)
 	state = models.CharField(max_length=50)
-	streetAddress = models.CharField(max_length=100)
+	streetaddress = models.CharField(max_length=100)
 	def __str__(self):
 		return self.name
 
 class Patron(models.Model):
-	patronID = models.AutoField(primary_key=True)
-	libraryID = models.ForeignKey(Library, on_delete=models.CASCADE)
-	firstName = models.CharField(max_length=50)
-	lastName = models.CharField(max_length=50)
-	birthDate = models.DateField()
-	phoneNumber = models.IntegerField(default=0)
+	patronid = models.AutoField(primary_key=True)
+	libraryid = models.ForeignKey(Library, on_delete=models.CASCADE)
+	firstname = models.CharField(max_length=50)
+	lastname = models.CharField(max_length=50)
+	birthdate = models.DateField()
+	phonenumber = models.IntegerField(default=0)
 	email = models.EmailField()
 	def __str__(self):
-		return (self.firstName+" "+self.lastName)
+		return (self.firstname+" "+self.lastname)
 
 class Book(models.Model):
-	isbn = models.IntegerField(default=0,primary_key=True)
-	title = models.CharField(max_length=250)
-	author = models.CharField(max_length=50)
-	publishedDate = models.DateField()
-	edition = models.IntegerField(default=1)
+	isbn = models.BigIntegerField(default=0,primary_key=True)
+	title = models.CharField(max_length=450)
+	author = models.CharField(max_length=760)
+	publisheddate = models.DateField()
 	def __str__(self):
 		return self.title
 
-class Holds(models.Model):
-	patronID = models.ForeignKey(Patron, on_delete=models.CASCADE)
+class Hold(models.Model):
+	patronid = models.ForeignKey(Patron, on_delete=models.CASCADE)
 	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
-	libraryID = models.ForeignKey(Library, on_delete=models.CASCADE)
-	datePlaced = models.DateField()
-	holdID = models.AutoField(primary_key=True)
+	libraryid = models.ForeignKey(Library, on_delete=models.CASCADE)
+	dateplaced = models.DateField()
+	holdid = models.AutoField(primary_key=True)
 	def __str__(self):
-		return self.holdID
+		return (self.patronid + " " + self.isbn)
 
 class Copy(models.Model):
 	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
-	copyNumber = models.IntegerField(default=0)
-	libraryID = models.ForeignKey(Library, on_delete=models.CASCADE)
-	purchaseDate = models.DateField()
+	copynumber = models.IntegerField(default=0)
+	libraryid = models.ForeignKey(Library, on_delete=models.CASCADE)
+	purchasedate = models.DateField()
 	condition = models.CharField(max_length=250)
 	status = models.CharField(max_length=250)
-	copyID = models.AutoField(primary_key=True)
+	copyid = models.AutoField(primary_key=True)
 	def __str__(self):
-		return self.copyID
+		return (self.isbn + " " + self.copynumber)
 
 class CheckedOut(models.Model):
 	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
-	copyNumber = models.IntegerField(default=0)
-	patronID = models.ForeignKey(Patron, on_delete=models.CASCADE)
-	checkOutDate = models.DateField()
-	dueDate = models.DateField()
-	timesRenewed = models.IntegerField(default=0)
-	overdueFee = models.DecimalField(max_digits=10,decimal_places=2)
+	copynumber = models.IntegerField(default=0)
+	copyid = models.ForeignKey(Copy, on_delete=models.CASCADE,default=0)
+	patronid = models.ForeignKey(Patron, on_delete=models.CASCADE)
+	checkoutdate = models.DateField()
+	duedate = models.DateField()
+	timesrenewed = models.IntegerField(default=0)
+	overduefee = models.DecimalField(max_digits=10,decimal_places=2)
 	def __str__(self):
-		return self.copyID
+		return (self.isbn + " " + self.copyid)
