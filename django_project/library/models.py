@@ -17,7 +17,7 @@ class Patron(models.Model):
 	firstname = models.CharField(max_length=50)
 	lastname = models.CharField(max_length=50)
 	birthdate = models.DateField()
-	phonenumber = models.IntegerField(default=0)
+	phonenumber = models.BigIntegerField(default=0)
 	email = models.EmailField()
 	def __str__(self):
 		return (self.firstname+" "+self.lastname)
@@ -41,18 +41,16 @@ class Hold(models.Model):
 
 class Copy(models.Model):
 	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
-	copynumber = models.IntegerField(default=0)
 	libraryid = models.ForeignKey(Library, on_delete=models.CASCADE)
 	purchasedate = models.DateField()
 	condition = models.CharField(max_length=250)
 	status = models.CharField(max_length=250)
-	copyid = models.AutoField(primary_key=True)
+	copyid = models.IntegerField(primary_key=True)
 	def __str__(self):
 		return (self.isbn + " " + self.copynumber)
 
 class CheckedOut(models.Model):
 	isbn = models.ForeignKey(Book, on_delete=models.CASCADE)
-	copynumber = models.IntegerField(default=0)
 	copyid = models.ForeignKey(Copy, on_delete=models.CASCADE,default=0)
 	patronid = models.ForeignKey(Patron, on_delete=models.CASCADE)
 	checkoutdate = models.DateField()
