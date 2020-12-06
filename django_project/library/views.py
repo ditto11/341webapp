@@ -28,13 +28,13 @@ def home(request):
         'search_t': search_t
         }
     
-    return render(request, 'search/home.html,' context)
+    return render(request, 'search/home.html,')
 
 def search(request):
     query = request.GET.get('q', '')
     if query:
         queryset = (Q(title_icontaints=query))|(Q(author_icontains=query))
-            results = Posts.objects.filter(queryset).distinct()
-        else:
-            results = []
-        retrun render(request, 'search.html', {'results': results, 'query': query})
+        results = Posts.objects.filter(queryset).distinct()
+    else:
+        results = []
+    return render(request, 'search.html', context={'results': results, 'query': query})
