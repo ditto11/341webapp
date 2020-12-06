@@ -6,21 +6,21 @@ from django.views.decorators.cache import never_cache
 
 # Create your views here.
 @never_cache
-def index(request):
+#def index(request):
 	#return HttpResponse("Hello, world. You're at the library index!")
-	books = Book.objects.filter(author="Tamora Pierce")
-	htmlString = """<title>Library Database Search</title> <body> """
-	for word in books:
-		htmlString = htmlString + "<br>" + word.title
-	htmlString += "</body>"
-	return HttpResponse(htmlString)
+#	books = Book.objects.filter(author="Tamora Pierce")
+#	htmlString = """<title>Library Database Search</title> <body> """
+#	for word in books:
+#		htmlString = htmlString + "<br>" + word.title
+#	htmlString += "</body>"
+#	return HttpResponse(htmlString)
 
 def home(request):
-    books = Books.objects.all()
+    books = Book.objects.all()
     search_t = ''
     if 'search' in request.GET:
         search_t = request.GET['search']
-        books = books.filter(title_icontaints=search_t)
+        books = books.filter(title__icontains=search_t)
         
         
     context = {
@@ -28,12 +28,12 @@ def home(request):
         'search_t': search_t
         }
     
-    return render(request, 'search/home.html,')
+    return render(request, 'home.html')
 
 def search(request):
     query = request.GET.get('q', '')
     if query:
-        queryset = (Q(title_icontaints=query))|(Q(author_icontains=query))
+        queryset = (Q(title__icontains=query))|(Q(author__icontains=query))
         results = Posts.objects.filter(queryset).distinct()
     else:
         results = []
