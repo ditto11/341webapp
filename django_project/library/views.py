@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from library.models import *
+from django.db.models import Q
 from django.views.decorators.cache import never_cache
 
 # Create your views here.
@@ -13,3 +14,27 @@ def index(request):
 		htmlString = htmlString + "<br>" + word.title
 	htmlString += "</body>"
 	return HttpResponse(htmlString)
+
+def home(request):
+    books = Books.objects.all()
+    search_t = ''
+    if 'search' in request.GET:
+        search_t = request.GET['search']
+        books = books.filter(title_icontaints=search_t)
+        
+        
+    context = {
+        'books': books,
+        'search_t': search_t
+        }
+    
+    return render(request, 'search/home.html,' context)
+
+def search(request):
+    query = request.GET.get('q', '')
+    if query:
+        queryset = (Q(title_icontaints=query))|(Q(author_icontains=query))
+            results = Posts.objects.filter(queryset).distinct()
+        else:
+            results = []
+        retrun render(request, 'search.html', {'results': results, 'query': query})
