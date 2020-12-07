@@ -1,9 +1,9 @@
     
  <h1>Search</h1>
-  {%if query}
-      {%if results%}
+  {% if query %}
+      {% if results %}
   <ul>
-      {%for item in results%}
+      {% for item in results %}
         <li>
         {{book.title}}, {{book.author}}
         </li>
@@ -11,6 +11,6 @@
         </ul>
         {% else %}
             <p>Query returned no results. </p>
-        {%endif%}
-    {%endif%}
+        {% endif %}
+    {% endif %}
         
