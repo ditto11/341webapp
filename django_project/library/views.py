@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from library.models import *
 from django.db.models import Q
 from django.views.decorators.cache import never_cache
-from django.view.generic import TemplateView, ListView
 
 # Create your views here.
 @never_cache
