@@ -5,12 +5,12 @@
   <ul>
       {% for item in results %}
         <li>
-        {{book.title}}, {{book.author}}
+        {{item|escape}}
         </li>
         {% endfor %}
         </ul>
         {% else %}
-            <p>Query returned no results. </p>
+            <p> Query returned no results. </p>
         {% endif %}
     {% endif %}
         
