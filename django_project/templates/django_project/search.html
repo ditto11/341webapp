@@ -1,4 +1,16 @@
 <form method = 'GET' action="">
-<input type="title" name="q" placeholder = "Search library"/>
+<input type="text" name="q" placeholder = "Search library"/>
 <input type="submit" value = "{{query|escape}}"/>
 </form>
+      
+ {% if query %}
+    {% if results %}
+    <ul>
+    {% for item in results %}
+        <li>{{ item|escape }}</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+       <p>Query did not yield any results. </p>
+    {% endif %}
+{% endif %} 
