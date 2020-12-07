@@ -1,16 +1,9 @@
     
  <h1>Search</h1>
-  {% if query %}
-      {% if results %}
-  <ul>
-      {% for word in books %}
-        <li>
-        {{word.title}}, {{word.author}}
-        </li>
-        {% endfor %}
-        </ul>
-        {% else %}
+      {% for books in results %}
+       <p> {{books.title}} </p>
+       <p> {{books.author}} <p>
+        {% empty %}
             <p> Query returned no results. </p>
-        {% endif %}
-    {% endif %}
+      {% endfor %}
         
