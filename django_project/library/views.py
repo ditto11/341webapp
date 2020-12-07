@@ -46,7 +46,7 @@ def home(request):
 
 def search(request):
     books = Book.objects.all()
-    query = request.GET.get('q','testDefault')
-    #queryset = (Q(title__icontains=query)|Q(author__icontains=query))
-    results = Book.objects.filter(title__icontains=query).filter(author__icontains=query).distinct()
+    query = request.GET.get('q')
+    queryset = (Q(title__icontains=query)|Q(author__icontains=query))
+    results = Book.objects.filter(queryset).distinct()
     return render(request, 'search.html', {'results': results, 'query': query})
