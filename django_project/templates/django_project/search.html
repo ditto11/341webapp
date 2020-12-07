@@ -1,10 +1,16 @@
     
  <h1>Search</h1>
+  {%if query}
+      {%if results%}
   <ul>
-      {%for book in object_list%}
+      {%for item in results%}
         <li>
         {{book.title}}, {{book.author}}
         </li>
-        {%endfor %}
+        {% endfor %}
+        </ul>
+        {% else %}
+            <p>Query returned no results. </p>
+        {%endif%}
+    {%endif%}
         
-    </ul>
