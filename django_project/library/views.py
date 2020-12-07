@@ -22,12 +22,12 @@ from django.views.decorators.cache import never_cache
 #class HomePageView(TemplateView):
     #template_name = 'home.html'
 
-def home(request):
-    books = Book.objects.all()
-    search_t = ''
-    if 'search' in request.GET:
-       search_t = request.GET['search']
-       books = Book.objects.filter(title__icontains=search_t)
+#def home(request):
+    #books = Book.objects.all()
+    #search_t = ''
+    #if 'search' in request.GET:
+     #  search_t = request.GET['search']
+      # books = Book.objects.filter(title__icontains=search_t)
         
         
    # context = {
@@ -35,7 +35,7 @@ def home(request):
        # 'search_t': search_t
        # }
     
-    return render(request, 'home.html')
+   # return render(request, 'home.html')
 
 #def get_queryset(self):
    # query = self.request.GET.get('q')
