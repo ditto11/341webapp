@@ -20,14 +20,15 @@ class SearchView(ListView):
         model = Book
         template_name = 'search.html'
         
-class HomePageView(TemplateView):
-    template_name = 'home.html'
+#class HomePageView(TemplateView):
+    #template_name = 'home.html'
 
-#def home(request):
-    #books = Book.objects.all()
-    #search_t = ''
-    #    search_t = request.GET['search']
-    #    books = Book.objects.filter(title__icontains=search_t)
+def home(request):
+    books = Book.objects.all()
+    search_t = ''
+    if 'search' in request.GET:
+       search_t = request.GET['search']
+       books = Book.objects.filter(title__icontains=search_t)
         
         
    # context = {
@@ -35,7 +36,7 @@ class HomePageView(TemplateView):
        # 'search_t': search_t
        # }
     
-   # return render(request, 'home.html')
+    return render(request, 'home.html')
 
 def get_queryset(self):
     query = self.request.GET.get('q')
