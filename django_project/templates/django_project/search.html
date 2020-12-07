@@ -3,9 +3,9 @@
   {% if query %}
       {% if results %}
   <ul>
-      {% for item in results %}
+      {% for word in books %}
         <li>
-        {{item|escape}}
+        {{word.title}}, {{word.author}}
         </li>
         {% endfor %}
         </ul>
