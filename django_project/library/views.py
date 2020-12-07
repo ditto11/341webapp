@@ -30,12 +30,12 @@ def home(request):
        books = Book.objects.filter(title__icontains=search_t)
         
         
-   # context = {
-      # 'books': books,
-       # 'search_t': search_t
-       # }
+   context = {
+      'books': books,
+       'search_t': search_t
+       }
     
-    return render(request, 'home.html')
+    return render(request, 'home.html', context)
 
 #def get_queryset(self):
    # query = self.request.GET.get('q')
