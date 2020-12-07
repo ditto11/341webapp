@@ -20,13 +20,13 @@ def home(request):
     search_t = ''
     if 'search' in request.GET:
         search_t = request.GET['search']
-        books = books.filter(title__icontains=search_t)
+        books = Book.filter(title__icontains=search_t)
         
         
-    context = {
-        'books': books,
-        'search_t': search_t
-        }
+   # context = {
+       # 'books': books,
+       # 'search_t': search_t
+       # }
     
     return render(request, 'home.html')
 
@@ -37,4 +37,4 @@ def search(request):
         results = Book.objects.filter(queryset).distinct()
     else:
         results = []
-    return render(request, 'search.html', context={'results': results, 'query': query})
+    return render(request, 'search.html', {'results': results })
