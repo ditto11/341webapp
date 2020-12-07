@@ -1,0 +1,5 @@
+<h1>HomePage</h1>>
+<form method ='GET' action="{% url 'search' %}">
+<input type="text" name ="search" placeholder = "Search library"/>
+<input type="submit" value={{query|escape}}/>
+</form>
