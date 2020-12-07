@@ -20,7 +20,7 @@ def home(request):
     search_t = ''
     if 'search' in request.GET:
         search_t = request.GET['search']
-        books = Book.filter(title__icontains=search_t)
+        books = Book.objects.filter(title__icontains=search_t)
         
         
    # context = {
